@@ -19,7 +19,7 @@ export default function Routing() {
     return (
         <Router>
             <React.StrictMode>  
-                <LoginContext.Provider value={ isAuth, setIsAuth }>            
+                <LoginContext.Provider value={{ isAuth, setIsAuth }}>            
                     <Header />                    
                     <Switch>
                         <Route exact path="/" component={App} />
