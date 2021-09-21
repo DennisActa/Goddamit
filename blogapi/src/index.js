@@ -10,48 +10,50 @@ import Footer from './components/footer';
 import Register from './components/register';
 import Login from './components/login';
 import Logout from './components/logout';
+import Single from './components/single';
 import { LoginContext } from './contexts/loginContext';
 
 export default function Routing() {
 
-    const [isAuth, setIsAuth] = useLocalStorage('access_token', false);
+    //const [isAuth, setIsAuth] = useLocalStorage('access_token', false);
+    const [isAuth, setIsAuth] = useState(false);
     const [username, setUsername] = useState();  
 
-    // Hook
-    function useLocalStorage(key, initialValue) {
-      // State to store our value
-      // Pass initial state function to useState so logic is only executed once
-      const [storedValue, setStoredValue] = useState(() => {
-        try {
-          // Get from local storage by key
-          const item = localStorage.getItem(key);
-          // Parse stored json or if none return initialValue          
-          return item ? JSON.parse(item) : initialValue;          
-        } catch (error) {
-          // If error also return initialValue
-          console.log(error);
-          return initialValue;
-        }
-      });
-      // Return a wrapped version of useState's setter function that ...
-      // ... persists the new value to localStorage.
-      const setValue = (value) => {
-        try {
-          // Allow value to be a function so we have same API as useState
-          const valueToStore =
-            value instanceof Function ? value(storedValue) : value;
-          // Save state
-          setStoredValue(valueToStore);
-          // Save to local storage
-          localStorage.setItem(key, JSON.stringify(valueToStore));
-        } catch (error) {
-          // A more advanced implementation would handle the error case
-          console.log(error);
-        }
-      };
+    // // Hook
+    // function useLocalStorage(key, initialValue) {
+    //   // State to store our value
+    //   // Pass initial state function to useState so logic is only executed once
+    //   const [storedValue, setStoredValue] = useState(() => {
+    //     try {
+    //       // Get from local storage by key
+    //       const item = localStorage.getItem(key);
+    //       // Parse stored json or if none return initialValue          
+    //       return item ? JSON.parse(item) : initialValue;          
+    //     } catch (error) {
+    //       // If error also return initialValue
+    //       console.log(error);
+    //       return initialValue;
+    //     }
+    //   });
+    //   // Return a wrapped version of useState's setter function that ...
+    //   // ... persists the new value to localStorage.
+    //   const setValue = (value) => {
+    //     try {
+    //       // Allow value to be a function so we have same API as useState
+    //       const valueToStore =
+    //         value instanceof Function ? value(storedValue) : value;
+    //       // Save state
+    //       setStoredValue(valueToStore);
+    //       // Save to local storage
+    //       localStorage.setItem(key, JSON.stringify(valueToStore));
+    //     } catch (error) {
+    //       // A more advanced implementation would handle the error case
+    //       console.log(error);
+    //     }
+    //   };
 
-      return [storedValue, setValue];
-    }
+    //   return [storedValue, setValue];
+    // }
 
     return (
         <Router>
@@ -62,7 +64,8 @@ export default function Routing() {
                         <Route exact path="/" component={App} />
                         <Route exact path="/register" component={Register} />                    
                         <Route exact path="/login" component={Login} />
-                        <Route exact path="/logout" component={Logout} />                    
+                        <Route exact path="/logout" component={Logout} />
+                        <Route exact path="/post/:slug" component={Single} />                  
                     </Switch>
                     <Footer />      
                 </LoginContext.Provider>      
