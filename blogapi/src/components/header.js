@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -25,6 +25,7 @@ function Header() {
     const classes = useStyles(); 
 
     const { isAuth } = useContext(LoginContext);
+    const { username } = useContext(LoginContext);
 
     return (
         <React.Fragment>            
@@ -51,6 +52,8 @@ function Header() {
                             BlogmeUp
                         </Link>
                     </Typography>
+                    {!isAuth ?
+                    <>
                     <nav>
                         <Link 
                             color="textPrimary"
@@ -60,8 +63,7 @@ function Header() {
                         >
                             Register
                         </Link>
-                    </nav>
-                    {!isAuth ?
+                    </nav>                    
                         <Button 
                             href="#"
                             color="primary"
@@ -72,7 +74,10 @@ function Header() {
                         >
                             Login
                         </Button>
+                    </>
                         :
+                    <>
+                        <p>Welcome, user</p>
                         <Button 
                             href="#"
                             color="primary"
@@ -83,6 +88,7 @@ function Header() {
                         >
                             Logout
                         </Button>
+                    </>
                     }
                 </Toolbar>
             </AppBar>
