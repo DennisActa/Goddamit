@@ -26,9 +26,9 @@ export default function Post() {
     const [data, setData] = useState({ posts: [] });
 
     useEffect(() => {
-        axiosInstance.get(slug).then((res) => {
+        axiosInstance.get('posts/' + slug).then((res) => {
             setData({ posts: res.data });
-            console.log(res.data);
+            //console.log(res.data);
         });
     }, [setData]);
 
@@ -38,7 +38,7 @@ export default function Post() {
             <div className={classes.paper}></div>
             <div className={classes.heroContent}>
                 <Container maxWidth="md">
-                    <img src="https://source.unsplash.com/random" title={data.posts.title} className={classes.image} />
+                    <img src="https://source.unsplash.com/random" title={data.posts.title} className={classes.image} alt={data.posts.title} />
                     <Typography
                         component="h1"
                         variant="h2"

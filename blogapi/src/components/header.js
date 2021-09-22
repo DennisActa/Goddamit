@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -7,6 +7,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { NavLink } from 'react-router-dom';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
+import SearchBar from 'material-ui-search-bar';
+import { useHistory } from 'react-router-dom';
 import { LoginContext } from '../contexts/loginContext';
 
 const useStyles = makeStyles((theme) => ({
@@ -26,6 +28,17 @@ function Header() {
 
     const { isAuth } = useContext(LoginContext);
     const { username } = useContext(LoginContext);
+
+    let history = useHistory();
+    const [data, setData] = useState({ search: '' });
+
+    const goSearch = (e) => {
+        history.push({
+            pathname: '/search/',
+            search: '?search=' + data.search,
+        });
+        window.location.reload();
+    };
 
     return (
         <React.Fragment>            
@@ -49,9 +62,16 @@ function Header() {
                             underline="none"
                             color="textPrimary"
                         >
-                            BlogmeUp
+                            Blog
                         </Link>
                     </Typography>
+                    
+                    <SearchBar
+                        value={data.search}
+                        onChange={(newValue) => setData({ search: newValue })}
+                        onRequestSearch={() => goSearch(data.search)}
+                    />
+
                     {!isAuth ?
                     <>
                     <nav>

@@ -11,6 +11,7 @@ import Register from './components/register';
 import Login from './components/login';
 import Logout from './components/logout';
 import Single from './components/single';
+import Search from './components/search';
 import { LoginContext } from './contexts/loginContext';
 
 export default function Routing() {
@@ -66,6 +67,7 @@ export default function Routing() {
                         <Route exact path="/login" component={Login} />
                         <Route exact path="/logout" component={Logout} />
                         <Route exact path="/post/:slug" component={Single} />                  
+                        <Route exact path="/search/" component={Search} />                                         
                     </Switch>
                     <Footer />      
                 </LoginContext.Provider>      
