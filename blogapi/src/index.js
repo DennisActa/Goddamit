@@ -17,8 +17,8 @@ import { LoginContext } from './contexts/loginContext';
 export default function Routing() {
 
     //const [isAuth, setIsAuth] = useLocalStorage('access_token', false);
-    const [isAuth, setIsAuth] = useState(false);
-    const [username, setUsername] = useState();  
+    const [user, setUser] = useState(localStorage.getItem('user'));
+    const isAuth = !!user;
 
     // // Hook
     // function useLocalStorage(key, initialValue) {
@@ -59,7 +59,7 @@ export default function Routing() {
     return (
         <Router>
             <React.StrictMode>  
-                <LoginContext.Provider value={{ isAuth, setIsAuth, username, setUsername }}>            
+                <LoginContext.Provider value={{ user, setUser, isAuth }}>            
                     <Header />                    
                     <Switch>
                         <Route exact path="/" component={App} />

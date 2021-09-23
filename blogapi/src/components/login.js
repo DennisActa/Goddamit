@@ -43,8 +43,7 @@ export default function SignIn() {
         password: '',
     });
 
-    const { setIsAuth } = useContext(LoginContext);
-    const { setUsername } = useContext(LoginContext);
+    const { user, setUser, IsAuth } = useContext(LoginContext);
 
     const [formData, updateFormData] = useState(initialFormData); 
 
@@ -67,8 +66,9 @@ export default function SignIn() {
             .then((res) =>{
                 localStorage.setItem('access_token', res.data.access);
                 localStorage.setItem('refresh_token', res.data.refresh);
+                localStorage.setItem('user', formData.username);
                 axiosInstance.defaults.headers['Authorization'] = 'JWT ' + localStorage.getItem('access_token');
-                setIsAuth(true);
+                setUser(formData.username);
                 history.push('/');
             });
     };

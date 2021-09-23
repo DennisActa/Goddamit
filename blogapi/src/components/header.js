@@ -26,8 +26,7 @@ const useStyles = makeStyles((theme) => ({
 function Header() {
     const classes = useStyles(); 
 
-    const { isAuth } = useContext(LoginContext);
-    const { username } = useContext(LoginContext);
+    const { user, setUser, isAuth } = useContext(LoginContext);
 
     let history = useHistory();
     const [data, setData] = useState({ search: '' });
@@ -72,43 +71,43 @@ function Header() {
                         onRequestSearch={() => goSearch(data.search)}
                     />
 
-                    {!isAuth ?
-                    <>
-                    <nav>
-                        <Link 
-                            color="textPrimary"
-                            className={classes.link}
-                            component={NavLink}
-                            to="/register"
-                        >
-                            Register
-                        </Link>
-                    </nav>                    
-                        <Button 
-                            href="#"
-                            color="primary"
-                            variant="outlined"
-                            className={classes.link}
-                            component={NavLink}
-                            to="/login"
-                        >
-                            Login
-                        </Button>
-                    </>
+                    {isAuth ?                   
+                        <>
+                            <p>Welcome, {user}</p>
+                            <Button 
+                                href="#"
+                                color="primary"
+                                variant="outlined"
+                                className={classes.link}
+                                component={NavLink}
+                                to="/logout"
+                            >
+                                Logout
+                            </Button>
+                        </>
                         :
-                    <>
-                        <p>Welcome, user</p>
-                        <Button 
-                            href="#"
-                            color="primary"
-                            variant="outlined"
-                            className={classes.link}
-                            component={NavLink}
-                            to="/logout"
-                        >
-                            Logout
-                        </Button>
-                    </>
+                        <>
+                        <nav>
+                            <Link 
+                                color="textPrimary"
+                                className={classes.link}
+                                component={NavLink}
+                                to="/register"
+                            >
+                                Register
+                            </Link>
+                        </nav>                    
+                            <Button 
+                                href="#"
+                                color="primary"
+                                variant="outlined"
+                                className={classes.link}
+                                component={NavLink}
+                                to="/login"
+                            >
+                                Login
+                            </Button>
+                        </>
                     }
                 </Toolbar>
             </AppBar>
