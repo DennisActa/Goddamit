@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import Posts from './components/posts';
-import PostLoadingComponent from './components/postloading';
+import Posts from './components/posts/posts';
+import PostLoadingComponent from './components/posts/postloading';
 import axiosInstance from './axios';
 
 /*  Original function from tutorial
@@ -33,7 +33,7 @@ function App() {
 function App() {
     const PostLoading = PostLoadingComponent(Posts);
     const [appState, setAppState] = useState({
-        loading: false,
+        loading: true,
         posts: null,
     });
 

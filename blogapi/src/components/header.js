@@ -14,13 +14,25 @@ import { LoginContext } from '../contexts/loginContext';
 const useStyles = makeStyles((theme) => ({
     appBar: {
         borderBottom: `1px solid ${theme.palette.divider}`,
+        backgroundColor: '#1e1e1e',
+        color: '#fff',
+    },
+    white: {
+        color: '#fff',
     },
     link: {
         margin: theme.spacing(1, 1.5),
     },
+    dashboard: {
+        marginRight: theme.spacing(-1),
+    },
     toolbarTitle: {
         flexGrow: 1,
-    }
+    },
+    loggedMessage: {
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
+    },
 }));
 
 function Header() {
@@ -44,7 +56,6 @@ function Header() {
             <CssBaseline />
             <AppBar 
                 position="static" 
-                color="default" 
                 elevation={0} 
                 className={classes.appBar}
             >
@@ -59,9 +70,9 @@ function Header() {
                             component={NavLink}
                             to="/"
                             underline="none"
-                            color="textPrimary"
+                            className={classes.white}
                         >
-                            Blog
+                            ActaBlog
                         </Link>
                     </Typography>
                     
@@ -73,10 +84,20 @@ function Header() {
 
                     {isAuth ?                   
                         <>
-                            <p>Welcome, {user}</p>
+                            <p className={classes.loggedMessage}>Welcome, {user}</p>
                             <Button 
                                 href="#"
-                                color="primary"
+                                color="secondary"
+                                variant="contained"
+                                className={classes.dashboard}
+                                component={NavLink}
+                                to="/admin"
+                            >
+                                Dashboard
+                            </Button>
+                            <Button 
+                                href="#"
+                                color="secondary"
                                 variant="outlined"
                                 className={classes.link}
                                 component={NavLink}
@@ -90,7 +111,7 @@ function Header() {
                         <nav>
                             <Link 
                                 color="textPrimary"
-                                className={classes.link}
+                                className={`${classes.link} ${classes.white}`}
                                 component={NavLink}
                                 to="/register"
                             >
@@ -99,8 +120,8 @@ function Header() {
                         </nav>                    
                             <Button 
                                 href="#"
-                                color="primary"
-                                variant="outlined"
+                                color="secondary"
+                                variant="contained"
                                 className={classes.link}
                                 component={NavLink}
                                 to="/login"

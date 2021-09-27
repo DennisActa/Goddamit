@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import axiosInstance from '../axios';
+import axiosInstance from '../../axios';
 import { useHistory } from 'react-router-dom';
 //MaterialUI
 import Avatar from '@material-ui/core/Avatar';
@@ -14,7 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { NavLink } from 'react-router-dom';
-import { LoginContext } from '../contexts/loginContext';
+import { LoginContext } from '../../contexts/loginContext';
 
 const useStyles = makeStyles((theme) => ({
     paper: {

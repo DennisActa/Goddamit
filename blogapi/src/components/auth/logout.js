@@ -1,9 +1,9 @@
 import React, { useEffect, useContext } from 'react';
-import axiosInstance from '../axios';
+import axiosInstance from '../../axios';
 import { useHistory } from 'react-router-dom';
-import { LoginContext } from '../contexts/loginContext';
+import { LoginContext } from '../../contexts/loginContext';
 
-export default function SignUp() {
+export default function Logout() {
     const history = useHistory();
 
     const { user, setUser, isAuth } = useContext(LoginContext);
