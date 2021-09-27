@@ -100,7 +100,7 @@ const Posts = (props) => {
                                 })}
                                 <TableRow>
                                     <TableCell colSpan={4} align="right">
-                                        <Button href={'admin/create/'} variant="contained" color="primary">
+                                        <Button href={'/admin/create/'} variant="contained" color="primary">
                                             <AddIcon></AddIcon> New Post
                                         </Button>
                                     </TableCell>
