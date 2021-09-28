@@ -59,7 +59,7 @@ export default function Edit() {
     const [formData, updateFormData] = useState(initialFormData);
 
     useEffect(() => {
-        axiosInstance.get('admin/edit/postdetail/' + id).then((res) => {
+        axiosInstance.get('admin/managepost/' + id).then((res) => {
             updateFormData({
                 ...formData,
                 ['title']: res.data.title,
@@ -75,7 +75,7 @@ export default function Edit() {
             updateFormData({
                 ...formData,
                 //Trimming any whitespace
-                [e.target.name]: e.target.value.trim(),
+                [e.target.name]: e.target.value,
                 ['slug']: slugify(e.target.value.trim()),
             });
         }
@@ -83,7 +83,7 @@ export default function Edit() {
             updateFormData({
                 ...formData,
                 //Trimming any whitespace
-                [e.target.name]: e.target.value.trim(),
+                [e.target.name]: e.target.value,
             });
         }
     };
@@ -91,7 +91,7 @@ export default function Edit() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        axiosInstance.put('admin/edit/' + id + '/', {
+        axiosInstance.put('admin/managepost/' + id + '/', {
             title: formData.title,
             slug: formData.slug,
             author: 2,

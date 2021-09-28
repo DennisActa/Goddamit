@@ -81,7 +81,7 @@ export default function Create() {
     const handleSubmit = (e) => {
         e.preventDefault();
         axiosInstance
-            .post('admin/create/', {
+            .post('admin/managepost/', {
                 title: formData.title,
                 slug: formData.slug,
                 author: 2,
