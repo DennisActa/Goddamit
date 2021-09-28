@@ -8,12 +8,12 @@ import Box from '@material-ui/core/Box';
 
 export default function Delete() {
     const history = useHistory();
-    const { id } = useParams();
+    const { slug } = useParams();
 
     const handleSubmit = (e) => {
         e.preventDefault();
         axiosInstance
-            .delete('admin/managepost/' + id)
+            .delete(slug)
             .catch(function(error) {
                 if(error.response) {
                     console.log(error.response.data);

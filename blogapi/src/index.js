@@ -69,8 +69,8 @@ export default function Routing() {
                         <Route exact path="/" component={App} />
                         <Route exact path="/admin" component={isAuth ? () => <Admin /> : () => <Redirect to="/login" />} />
                         <Route exact path="/admin/create" component={isAuth ? () => <Create /> : () => <Redirect to="/login" />} />
-                        <Route exact path="/admin/edit/:id" component={isAuth ? () => <Edit /> : () => <Redirect to="/login" />} />
-                        <Route exact path="/admin/delete/:id" component={isAuth ? () => <Delete /> : () => <Redirect to="/login" />} />
+                        <Route exact path="/admin/edit/:slug" component={isAuth ? () => <Edit /> : () => <Redirect to="/login" />} />
+                        <Route exact path="/admin/delete/:slug" component={isAuth ? () => <Delete /> : () => <Redirect to="/login" />} />
                         <Route exact path="/register" component={Register} />                    
                         <Route exact path="/login" component={Login} />
                         <Route exact path="/logout" component={Logout} />

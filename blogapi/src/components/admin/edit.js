@@ -47,7 +47,7 @@ export default function Edit() {
     }
 
     const history = useHistory();
-    const { id } = useParams();
+    const { slug } = useParams();
     const initialFormData = Object.freeze({
         id: '',
         title: '',
@@ -59,7 +59,7 @@ export default function Edit() {
     const [formData, updateFormData] = useState(initialFormData);
 
     useEffect(() => {
-        axiosInstance.get('admin/managepost/' + id).then((res) => {
+        axiosInstance.get(slug).then((res) => {
             updateFormData({
                 ...formData,
                 ['title']: res.data.title,
@@ -91,7 +91,7 @@ export default function Edit() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        axiosInstance.put('admin/managepost/' + id + '/', {
+        axiosInstance.put(slug + '/', {
             title: formData.title,
             slug: formData.slug,
             author: 2,

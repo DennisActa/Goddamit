@@ -82,14 +82,14 @@ const Posts = (props) => {
                                             <TableCell align="left">
                                                 <Link
                                                     color="textPrimary"
-                                                    href={'/admin/edit/' + post.id}
+                                                    href={'/admin/edit/' + post.slug}
                                                     className={classes.link}
                                                 >
                                                     <EditIcon></EditIcon>
                                                 </Link>
                                                 <Link
                                                     color="secondary"
-                                                    href={'/admin/delete/' + post.id}
+                                                    href={'/admin/delete/' + post.slug}
                                                     className={classes.link}
                                                 >
                                                     <DeleteForeverIcon></DeleteForeverIcon>
