@@ -38,7 +38,7 @@ export default function Post() {
             <div className={classes.paper}></div>
             <div className={classes.heroContent}>
                 <Container maxWidth="md">
-                    <img src="https://source.unsplash.com/random" title={data.posts.title} className={classes.image} alt={data.posts.title} />
+                    <img src={data.posts.image} title={data.posts.title} className={classes.image} alt={data.posts.title} />
                     <Typography
                         component="h1"
                         variant="h2"

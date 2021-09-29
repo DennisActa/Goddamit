@@ -58,12 +58,18 @@ export default function Create() {
         content: '',
     });
 
-    const [formData, updateFormData] = useState(initialFormData);
+    const [postData, updateFormData] = useState(initialFormData);
+    const [postImage, setPostImage] = useState(null);
 
     const handleChange = (e) => {
+        if([e.target.name] == 'image') {
+            setPostImage({
+                image: e.target.files,
+            });
+        }
         if([e.target.name] == 'title') {
             updateFormData({
-                ...formData,
+                ...postData,
                 //Trimming any whitespace
                 [e.target.name]: e.target.value.trim(),
                 ['slug']: slugify(e.target.value.trim()),
@@ -71,7 +77,7 @@ export default function Create() {
         }
         else {
             updateFormData({
-                ...formData,
+                ...postData,
                 //Trimming any whitespace
                 [e.target.name]: e.target.value.trim(),
             });
@@ -80,17 +86,18 @@ export default function Create() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axiosInstance
-            .post('' ,{
-                title: formData.title,
-                slug: formData.slug,
-                author: 2,
-                excerpt: formData.excerpt,
-                content: formData.content,
-            })
-            .then((res) => {
-                history.push('/admin/');
-            });
+        let formData = new FormData();
+        formData.append('title', postData.title);
+        formData.append('slug', postData.slug);
+        formData.append('author', 1);
+        formData.append('excerpt', postData.excerpt);
+        formData.append('content', postData.content);
+        formData.append('image', postImage.image[0]);
+        axiosInstance.post('', formData);
+        history.push({
+            pathname: '/admin/',
+        });
+        window.location.reload();
     };
 
     const classes = useStyles();
@@ -136,7 +143,7 @@ export default function Create() {
                                 id="slug" 
                                 label="slug"
                                 name="slug"
-                                value={formData.slug}
+                                value={postData.slug}
                                 onChange={handleChange}
                             />
                         </Grid>
@@ -151,6 +158,18 @@ export default function Create() {
                                 onChange={handleChange}
                                 multiline 
                                 rows={4}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined" 
+                                fullWidth 
+                                id="post-image" 
+                                label="Post Image"
+                                name="image"
+                                onChange={handleChange}
+                                accept="image/*"
+                                type="file"
                             />
                         </Grid>
                     </Grid>
