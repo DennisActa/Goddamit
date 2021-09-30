@@ -54,24 +54,45 @@ export default function SignIn() {
         });
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        //console.log(formData);
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     //console.log(formData);
 
-        axiosInstance
-            .post('token/', {
-                username: formData.username,
-                password: formData.password,
-            })
-            .then((res) =>{
-                localStorage.setItem('access_token', res.data.access);
-                localStorage.setItem('refresh_token', res.data.refresh);
-                localStorage.setItem('user', formData.username);
-                axiosInstance.defaults.headers['Authorization'] = 'JWT ' + localStorage.getItem('access_token');
-                setUser(formData.username);
-                history.push('/');
-            });
-    };
+    //     axiosInstance
+    //         .post('token/', {
+    //             username: formData.username,
+    //             password: formData.password,
+    //         })
+    //         .then((res) =>{
+    //             localStorage.setItem('access_token', res.data.access);
+    //             localStorage.setItem('refresh_token', res.data.refresh);
+    //             localStorage.setItem('user', formData.username);
+    //             axiosInstance.defaults.headers['Authorization'] = 'JWT ' + localStorage.getItem('access_token');
+    //             setUser(formData.username);
+    //             history.push('/');
+    //         });
+    // };
+
+    const handleSubmit = async(e) => {
+        e.preventDefault();
+
+        const tokenRes = await axiosInstance.post('token/', {username: formData.username, password: formData.password,});
+        localStorage.setItem('access_token', tokenRes.data.access);
+        localStorage.setItem('refresh_token', tokenRes.data.refresh);
+        axiosInstance.defaults.headers['Authorization'] = 'JWT ' + localStorage.getItem('access_token');
+
+        const userInfoRes = await axiosInstance.get('user/info/');
+        const userInfo = userInfoRes.data[0];
+        setUser({ 
+                username: userInfo.username,
+                first_name: userInfo.first_name,
+                last_name: userInfo.last_name,
+                email: userInfo.email,
+                isAuth: true,
+        });
+        history.push('/');
+
+    }
 
     const classes = useStyles();
 

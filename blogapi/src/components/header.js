@@ -82,9 +82,9 @@ function Header() {
                         onRequestSearch={() => goSearch(data.search)}
                     />
 
-                    {isAuth ?                   
+                    {user.isAuth ?                   
                         <>
-                            <p className={classes.loggedMessage}>Welcome, {user}</p>
+                            <p className={classes.loggedMessage}>Welcome, {user.first_name}</p>
                             <Button 
                                 href="#"
                                 color="secondary"

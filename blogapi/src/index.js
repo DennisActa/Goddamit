@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorker from './serviceWorker';
 import './index.css';
+import axiosInstance from './axios';
 import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
 import App from './App';
 import Header from './components/header';
@@ -21,8 +22,27 @@ import { LoginContext } from './contexts/loginContext';
 export default function Routing() {
 
     //const [isAuth, setIsAuth] = useLocalStorage('access_token', false);
-    const [user, setUser] = useState(localStorage.getItem('user'));
-    const isAuth = !!user;
+    const [user, setUser] = useState({
+        username: '',
+        first_name: '',
+        last_name: '',
+        email: '',
+        isAuth: false,
+    });
+
+    useEffect(() => {
+        axiosInstance.get('user/info/').then((res) => {
+            const userInfo = res.data[0];
+            console.log(userInfo);
+            setUser({ 
+                username: userInfo.username,
+                first_name: userInfo.first_name,
+                last_name: userInfo.last_name,
+                email: userInfo.email,
+                isAuth: true,
+            });
+        });
+    }, [setUser]);
 
     // // Hook
     // function useLocalStorage(key, initialValue) {
@@ -63,14 +83,14 @@ export default function Routing() {
     return (
         <Router>
             <React.StrictMode>  
-                <LoginContext.Provider value={{ user, setUser, isAuth }}>            
+                <LoginContext.Provider value={{ user, setUser }}>            
                     <Header />                    
                     <Switch>
                         <Route exact path="/" component={App} />
-                        <Route exact path="/admin" component={isAuth ? () => <Admin /> : () => <Redirect to="/login" />} />
-                        <Route exact path="/admin/create" component={isAuth ? () => <Create /> : () => <Redirect to="/login" />} />
-                        <Route exact path="/admin/edit/:slug" component={isAuth ? () => <Edit /> : () => <Redirect to="/login" />} />
-                        <Route exact path="/admin/delete/:slug" component={isAuth ? () => <Delete /> : () => <Redirect to="/login" />} />
+                        <Route exact path="/admin" component={user.isAuth ? () => <Admin /> : () => <Redirect to="/login" />} />
+                        <Route exact path="/admin/create" component={user.isAuth ? () => <Create /> : () => <Redirect to="/login" />} />
+                        <Route exact path="/admin/edit/:slug" component={user.isAuth ? () => <Edit /> : () => <Redirect to="/login" />} />
+                        <Route exact path="/admin/delete/:slug" component={user.isAuth ? () => <Delete /> : () => <Redirect to="/login" />} />
                         <Route exact path="/register" component={Register} />                    
                         <Route exact path="/login" component={Login} />
                         <Route exact path="/logout" component={Logout} />
