@@ -68,6 +68,7 @@ export default function Edit() {
                 ['excerpt']: res.data.excerpt,
                 ['slug']: res.data.slug,
                 ['content']: res.data.content,
+                ['published']: res.data.published,
             });
         });
     }, [updateFormData]);
@@ -103,6 +104,7 @@ export default function Edit() {
         formData.append('author', 1);
         formData.append('excerpt', postData.excerpt);
         formData.append('content', postData.content);
+        formData.append('published', postData.published);
         if(postImage.image !== null) {
             formData.append('image', postImage.image);
         }  

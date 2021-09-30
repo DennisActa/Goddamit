@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
+import { NavLink } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -76,8 +77,9 @@ const Search = () => {
                             <Grid item key={post.id} xs={12} md={4}>
                                 <Card className={classes.card}>
                                     <Link
+                                        component={NavLink}
                                         color="textPrimary"
-                                        href={'post/' + post.slug}
+                                        to={'/post/' + post.slug}
                                         className={classes.link}
                                     >
                                         <CardMedia
