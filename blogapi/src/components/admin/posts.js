@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
+import { NavLink } from 'react-router-dom';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -71,8 +72,9 @@ const Posts = (props) => {
 
                                             <TableCell align="left">
                                                 <Link
+                                                    component={NavLink}
                                                     color="textPrimary"
-                                                    href={'/post/' + post.slug}
+                                                    to={'/post/' + post.slug}
                                                     className={classes.link}
                                                 >
                                                     {post.title}
@@ -81,15 +83,17 @@ const Posts = (props) => {
 
                                             <TableCell align="left">
                                                 <Link
+                                                    component={NavLink}
                                                     color="textPrimary"
-                                                    href={'/admin/edit/' + post.slug}
+                                                    to={'/admin/edit/' + post.slug}
                                                     className={classes.link}
                                                 >
                                                     <EditIcon></EditIcon>
                                                 </Link>
                                                 <Link
+                                                    component={NavLink}
                                                     color="secondary"
-                                                    href={'/admin/delete/' + post.slug}
+                                                    to={'/admin/delete/' + post.slug}
                                                     className={classes.link}
                                                 >
                                                     <DeleteForeverIcon></DeleteForeverIcon>
@@ -100,7 +104,7 @@ const Posts = (props) => {
                                 })}
                                 <TableRow>
                                     <TableCell colSpan={4} align="right">
-                                        <Button href={'/admin/create/'} variant="contained" color="primary">
+                                        <Button component={NavLink} to={'/admin/create/'} variant="contained" color="primary">
                                             <AddIcon></AddIcon> New Post
                                         </Button>
                                     </TableCell>

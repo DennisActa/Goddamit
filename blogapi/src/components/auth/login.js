@@ -79,17 +79,18 @@ export default function SignIn() {
         const tokenRes = await axiosInstance.post('token/', {username: formData.username, password: formData.password,});
         localStorage.setItem('access_token', tokenRes.data.access);
         localStorage.setItem('refresh_token', tokenRes.data.refresh);
+        localStorage.setItem('user', formData.username);
         axiosInstance.defaults.headers['Authorization'] = 'JWT ' + localStorage.getItem('access_token');
-
-        const userInfoRes = await axiosInstance.get('user/info/');
-        const userInfo = userInfoRes.data[0];
-        setUser({ 
-                username: userInfo.username,
-                first_name: userInfo.first_name,
-                last_name: userInfo.last_name,
-                email: userInfo.email,
-                isAuth: true,
-        });
+        setUser(formData.username);
+        //const userInfoRes = await axiosInstance.get('user/info/');
+        //const userInfo = userInfoRes.data[0];
+        // setUser({ 
+        //         username: userInfo.username,
+        //         first_name: userInfo.first_name,
+        //         last_name: userInfo.last_name,
+        //         email: userInfo.email,
+        //         isAuth: true,
+        // });
         history.push('/');
 
     }

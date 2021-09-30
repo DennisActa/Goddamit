@@ -21,28 +21,32 @@ import { LoginContext } from './contexts/loginContext';
 
 export default function Routing() {
 
-    //const [isAuth, setIsAuth] = useLocalStorage('access_token', false);
-    const [initialized, setInitialized] = useState(false);
-    const [user, setUser] = useState({
-        username: '',
-        first_name: '',
-        last_name: '',
-        email: '',
-        isAuth: false,
-    });
+    const [user, setUser] = useState(localStorage.getItem('user'));
+    const isAuth = !!user;
 
-    useEffect(() => {
-        (async() =>{
-            try {
-                const [userInfo] = await axiosInstance.get('user/info/').then(resp => resp.data);
-                setUser({...userInfo, isAuth: true});
-            } catch (ex) {
-                // user not logged in
-            } finally {
-                setInitialized(true);
-            }
-        })();
-    }, [setUser]);
+    //const [isAuth, setIsAuth] = useLocalStorage('access_token', false);
+    // const [initialized, setInitialized] = useState(false);
+    // const [user, setUser] = useState({
+    //     username: '',
+    //     first_name: '',
+    //     last_name: '',
+    //     email: '',
+    //     isAuth: false,
+    // });
+
+    // useEffect(() => {
+    //     (async() =>{
+    //         try {
+    //             const [userInfo] = await axiosInstance.get('user/info/').then(resp => resp.data);
+    //             setUser({...userInfo, isAuth: true});
+    //         } catch (ex) {
+    //             // user not logged in
+    //         } finally {
+    //             setInitialized(true);
+    //         }
+    //     })();
+    // }, [setUser]);
+
 
     // // Hook
     // function useLocalStorage(key, initialValue) {
@@ -83,14 +87,14 @@ export default function Routing() {
     return (
         <Router>
             <React.StrictMode>  
-                <LoginContext.Provider value={{ user, setUser }}>            
+                <LoginContext.Provider value={{ user, setUser, isAuth }}>            
                     <Header />                    
                     <Switch>
                         <Route exact path="/" component={App} />
-                        {initialized && <Route exact path="/admin" component={user.isAuth ? () => <Admin /> : () => <Redirect to="/login" />} /> }
-                        {initialized && <Route exact path="/admin/create" component={user.isAuth ? () => <Create /> : () => <Redirect to="/login" />} /> }
-                        {initialized && <Route exact path="/admin/edit/:slug" component={user.isAuth ? () => <Edit /> : () => <Redirect to="/login" />} /> }
-                        {initialized && <Route exact path="/admin/delete/:slug" component={user.isAuth ? () => <Delete /> : () => <Redirect to="/login" />} /> }
+                        <Route exact path="/admin" component={isAuth ? () => <Admin /> : () => <Redirect to="/login" />} /> 
+                        <Route exact path="/admin/create" component={isAuth ? () => <Create /> : () => <Redirect to="/login" />} /> 
+                        <Route exact path="/admin/edit/:slug" component={isAuth ? () => <Edit /> : () => <Redirect to="/login" />} /> 
+                        <Route exact path="/admin/delete/:slug" component={isAuth ? () => <Delete /> : () => <Redirect to="/login" />} /> 
                         <Route exact path="/register" component={Register} />                    
                         <Route exact path="/login" component={Login} />
                         <Route exact path="/logout" component={Logout} />

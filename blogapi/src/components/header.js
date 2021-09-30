@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 function Header() {
     const classes = useStyles(); 
 
-    const { user, setUser } = useContext(LoginContext);
+    const { user, setUser, isAuth } = useContext(LoginContext);
 
     let history = useHistory();
     const [data, setData] = useState({ search: '' });
@@ -82,9 +82,9 @@ function Header() {
                         onRequestSearch={() => goSearch(data.search)}
                     />
 
-                    {user.isAuth ?                   
+                    {isAuth ?                   
                         <>
-                            <p className={classes.loggedMessage}>Welcome, {user.first_name}</p>
+                            <p className={classes.loggedMessage}>Welcome, {user}</p>
                             <Button 
                                 href="#"
                                 color="secondary"

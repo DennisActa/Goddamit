@@ -16,13 +16,14 @@ export default function Logout() {
         localStorage.removeItem('refresh_token');
         localStorage.removeItem('user');
         axiosInstance.defaults.headers['Authorization'] = null;
-        setUser({
-            username: '',
-            first_name: '',
-            last_name: '',
-            email: '',
-            isAuth: false,
-        });
+        setUser(false);
+        // setUser({
+        //     username: '',
+        //     first_name: '',
+        //     last_name: '',
+        //     email: '',
+        //     isAuth: false,
+        // });
         history.push('/login');
     });
     return <div>Logout</div>;
