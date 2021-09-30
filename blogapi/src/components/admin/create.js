@@ -59,12 +59,12 @@ export default function Create() {
     });
 
     const [postData, updateFormData] = useState(initialFormData);
-    const [postImage, setPostImage] = useState(null);
+    const [postImage, setPostImage] = useState({image: null});
 
     const handleChange = (e) => {
         if([e.target.name] == 'image') {
             setPostImage({
-                image: e.target.files,
+                image: e.target.files[0],
             });
         }
         if([e.target.name] == 'title') {
@@ -92,7 +92,9 @@ export default function Create() {
         formData.append('author', 1);
         formData.append('excerpt', postData.excerpt);
         formData.append('content', postData.content);
-        formData.append('image', postImage.image[0]);
+        if(postImage.image !== null) {
+            formData.append('image', postImage.image);
+        }        
         axiosInstance.post('', formData);
         history.push({
             pathname: '/admin/',

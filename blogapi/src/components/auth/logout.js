@@ -6,7 +6,7 @@ import { LoginContext } from '../../contexts/loginContext';
 export default function Logout() {
     const history = useHistory();
 
-    const { user, setUser, isAuth } = useContext(LoginContext);
+    const { user, setUser } = useContext(LoginContext);
 
     useEffect(() => {
         axiosInstance.post('user/logout/blacklist/', {
@@ -16,7 +16,13 @@ export default function Logout() {
         localStorage.removeItem('refresh_token');
         localStorage.removeItem('user');
         axiosInstance.defaults.headers['Authorization'] = null;
-        setUser('');
+        setUser({
+            username: '',
+            first_name: '',
+            last_name: '',
+            email: '',
+            isAuth: false,
+        });
         history.push('/login');
     });
     return <div>Logout</div>;

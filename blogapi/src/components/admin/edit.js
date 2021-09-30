@@ -54,14 +54,16 @@ export default function Edit() {
         slug: '',
         excerpt: '',
         content: '',
+        image: '',
     });
 
-    const [formData, updateFormData] = useState(initialFormData);
+    const [postData, updateFormData] = useState(initialFormData);
+    const [postImage, setPostImage] = useState({image: null});
 
     useEffect(() => {
         axiosInstance.get(slug).then((res) => {
             updateFormData({
-                ...formData,
+                ...postData,
                 ['title']: res.data.title,
                 ['excerpt']: res.data.excerpt,
                 ['slug']: res.data.slug,
@@ -71,9 +73,14 @@ export default function Edit() {
     }, [updateFormData]);
 
     const handleChange = (e) => {
+        if([e.target.name] == 'image') {
+            setPostImage({
+                image: e.target.files[0],
+            });
+        }
         if([e.target.name] == 'title') {
             updateFormData({
-                ...formData,
+                ...postData,
                 //Trimming any whitespace
                 [e.target.name]: e.target.value,
                 ['slug']: slugify(e.target.value.trim()),
@@ -81,7 +88,7 @@ export default function Edit() {
         }
         else {
             updateFormData({
-                ...formData,
+                ...postData,
                 //Trimming any whitespace
                 [e.target.name]: e.target.value,
             });
@@ -90,15 +97,19 @@ export default function Edit() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        axiosInstance.put(slug + '/', {
-            title: formData.title,
-            slug: formData.slug,
-            author: 2,
-            excerpt: formData.excerpt,
-            content: formData.content,
+        let formData = new FormData();
+        formData.append('title', postData.title);
+        formData.append('slug', postData.slug);
+        formData.append('author', 1);
+        formData.append('excerpt', postData.excerpt);
+        formData.append('content', postData.content);
+        if(postImage.image !== null) {
+            formData.append('image', postImage.image);
+        }  
+        axiosInstance.put(slug + '/', formData);
+        history.push({
+            pathname: '/admin/',
         });
-        history.push({ pathname: '/admin/'});
         window.location.reload();
     };
 
@@ -122,7 +133,7 @@ export default function Edit() {
                                 label="Post Title"
                                 name="title"
                                 autoComplete="title"
-                                value={formData.title}
+                                value={postData.title}
                                 onChange={handleChange}
                             />
                         </Grid>
@@ -135,7 +146,7 @@ export default function Edit() {
                                 label="Post Excerpt"
                                 name="excerpt"
                                 autoComplete="excerpt"
-                                value={formData.excerpt}
+                                value={postData.excerpt}
                                 onChange={handleChange}
                                 multiline
                                 rows={8}
@@ -150,7 +161,7 @@ export default function Edit() {
                                 label="slug"
                                 name="slug"
                                 autoComplete="slug"
-                                value={formData.slug}
+                                value={postData.slug}
                                 onChange={handleChange}
                             />
                         </Grid>
@@ -163,10 +174,22 @@ export default function Edit() {
                                 label="content"
                                 name="content"
                                 autoComplete="content"
-                                value={formData.content}
+                                value={postData.content}
                                 onChange={handleChange}
                                 multiline
                                 rows={8}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined" 
+                                fullWidth 
+                                id="post-image" 
+                                label="Post Image"
+                                name="image"
+                                onChange={handleChange}
+                                accept="image/*"
+                                type="file"
                             />
                         </Grid>
                     </Grid>

@@ -43,7 +43,7 @@ export default function SignIn() {
         password: '',
     });
 
-    const { user, setUser, IsAuth } = useContext(LoginContext);
+    const { user, setUser } = useContext(LoginContext);
 
     const [formData, updateFormData] = useState(initialFormData); 
 
