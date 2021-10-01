@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axiosInstance from '../../axios';
 import { useHistory } from 'react-router-dom';
 //MaterialUI
@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { LoginContext } from '../../contexts/loginContext';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -50,6 +51,8 @@ export default function Create() {
             .replace(/-+$/, ''); // Trim - from end of text
     }
 
+    const { user, userInfo } = useContext(LoginContext);
+
     const history = useHistory();
     const initialFormData = Object.freeze({
         title: '',
@@ -87,14 +90,15 @@ export default function Create() {
     const handleSubmit = (e) => {
         e.preventDefault();
         let formData = new FormData();
+        formData.append('category', 1);
         formData.append('title', postData.title);
         formData.append('slug', postData.slug);
-        formData.append('author', 1);
+        formData.append('author', userInfo.id);
         formData.append('excerpt', postData.excerpt);
         formData.append('content', postData.content);
         if(postImage.image !== null) {
             formData.append('image', postImage.image);
-        }        
+        } 
         axiosInstance.post('', formData);
         history.push({
             pathname: '/admin/',

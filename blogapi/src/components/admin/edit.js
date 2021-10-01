@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axiosInstance from '../../axios';
 import { useHistory, useParams } from 'react-router-dom';
 //MaterialUI
@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { LoginContext } from '../../contexts/loginContext';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -46,6 +47,8 @@ export default function Edit() {
             .replace(/-+$/, ''); // Trim - from end of text
     }
 
+    const { userInfo } = useContext(LoginContext);
+
     const history = useHistory();
     const { slug } = useParams();
     const initialFormData = Object.freeze({
@@ -64,7 +67,9 @@ export default function Edit() {
         axiosInstance.get(slug).then((res) => {
             updateFormData({
                 ...postData,
+                ['category']: res.data.category,
                 ['title']: res.data.title,
+                ['author']: res.data.author,
                 ['excerpt']: res.data.excerpt,
                 ['slug']: res.data.slug,
                 ['content']: res.data.content,
@@ -99,9 +104,10 @@ export default function Edit() {
     const handleSubmit = (e) => {
         e.preventDefault();
         let formData = new FormData();
+        formData.append('category', postData.category);
         formData.append('title', postData.title);
         formData.append('slug', postData.slug);
-        formData.append('author', 1);
+        formData.append('author', postData.author);
         formData.append('excerpt', postData.excerpt);
         formData.append('content', postData.content);
         formData.append('published', postData.published);

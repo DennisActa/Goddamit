@@ -24,70 +24,26 @@ export default function Routing() {
     const [user, setUser] = useState(localStorage.getItem('user'));
     const isAuth = !!user;
 
-    //const [isAuth, setIsAuth] = useLocalStorage('access_token', false);
-    // const [initialized, setInitialized] = useState(false);
-    // const [user, setUser] = useState({
-    //     username: '',
-    //     first_name: '',
-    //     last_name: '',
-    //     email: '',
-    //     isAuth: false,
-    // });
+    const [userInfo, setUserInfo] = useState({
+        id: '',
+        first_name: '',
+        last_name: '',
+        email: '',
+    });
 
-    // useEffect(() => {
-    //     (async() =>{
-    //         try {
-    //             const [userInfo] = await axiosInstance.get('user/info/').then(resp => resp.data);
-    //             setUser({...userInfo, isAuth: true});
-    //         } catch (ex) {
-    //             // user not logged in
-    //         } finally {
-    //             setInitialized(true);
-    //         }
-    //     })();
-    // }, [setUser]);
-
-
-    // // Hook
-    // function useLocalStorage(key, initialValue) {
-    //   // State to store our value
-    //   // Pass initial state function to useState so logic is only executed once
-    //   const [storedValue, setStoredValue] = useState(() => {
-    //     try {
-    //       // Get from local storage by key
-    //       const item = localStorage.getItem(key);
-    //       // Parse stored json or if none return initialValue          
-    //       return item ? JSON.parse(item) : initialValue;          
-    //     } catch (error) {
-    //       // If error also return initialValue
-    //       console.log(error);
-    //       return initialValue;
-    //     }
-    //   });
-    //   // Return a wrapped version of useState's setter function that ...
-    //   // ... persists the new value to localStorage.
-    //   const setValue = (value) => {
-    //     try {
-    //       // Allow value to be a function so we have same API as useState
-    //       const valueToStore =
-    //         value instanceof Function ? value(storedValue) : value;
-    //       // Save state
-    //       setStoredValue(valueToStore);
-    //       // Save to local storage
-    //       localStorage.setItem(key, JSON.stringify(valueToStore));
-    //     } catch (error) {
-    //       // A more advanced implementation would handle the error case
-    //       console.log(error);
-    //     }
-    //   };
-
-    //   return [storedValue, setValue];
-    // }
+    useEffect(() => {
+        if(isAuth) {
+            axiosInstance.get('user/info/').then((res) => {
+                const userInfo = res.data[0];
+                setUserInfo({ ...userInfo });
+            });
+        }       
+    }, [setUserInfo]);
 
     return (
         <Router>
             <React.StrictMode>  
-                <LoginContext.Provider value={{ user, setUser, isAuth }}>            
+                <LoginContext.Provider value={{ user, setUser, isAuth, userInfo, setUserInfo }}>            
                     <Header />                    
                     <Switch>
                         <Route exact path="/" component={App} />

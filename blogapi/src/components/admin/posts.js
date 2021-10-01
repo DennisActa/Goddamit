@@ -57,6 +57,7 @@ const Posts = (props) => {
                                 <TableRow>
                                     <TableCell>ID</TableCell>
                                     <TableCell>Category</TableCell>
+                                    <TableCell>Author</TableCell>
                                     <TableCell>Title</TableCell>
                                     <TableCell>Action</TableCell>
                                 </TableRow>
@@ -69,7 +70,7 @@ const Posts = (props) => {
                                                 {post.id}
                                             </TableCell>
                                             <TableCell align="left">{post.category.name}</TableCell>
-
+                                            <TableCell align="left">{post.author.username}</TableCell>
                                             <TableCell align="left">
                                                 <Link
                                                     component={NavLink}
@@ -103,7 +104,7 @@ const Posts = (props) => {
                                     );
                                 })}
                                 <TableRow>
-                                    <TableCell colSpan={4} align="right">
+                                    <TableCell colSpan={5} align="right">
                                         <Button component={NavLink} to={'/admin/create/'} variant="contained" color="primary">
                                             <AddIcon></AddIcon> New Post
                                         </Button>

@@ -43,7 +43,7 @@ export default function SignIn() {
         password: '',
     });
 
-    const { user, setUser } = useContext(LoginContext);
+    const { user, setUser, userInfo, setUserInfo } = useContext(LoginContext);
 
     const [formData, updateFormData] = useState(initialFormData); 
 
@@ -82,15 +82,9 @@ export default function SignIn() {
         localStorage.setItem('user', formData.username);
         axiosInstance.defaults.headers['Authorization'] = 'JWT ' + localStorage.getItem('access_token');
         setUser(formData.username);
-        //const userInfoRes = await axiosInstance.get('user/info/');
-        //const userInfo = userInfoRes.data[0];
-        // setUser({ 
-        //         username: userInfo.username,
-        //         first_name: userInfo.first_name,
-        //         last_name: userInfo.last_name,
-        //         email: userInfo.email,
-        //         isAuth: true,
-        // });
+        const userInfoRes = await axiosInstance.get('user/info/');
+        const userInfo = userInfoRes.data[0];
+        setUserInfo({ ...userInfo });
         history.push('/');
 
     }

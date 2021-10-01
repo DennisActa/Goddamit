@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
 function Header() {
     const classes = useStyles(); 
 
-    const { user, setUser, isAuth } = useContext(LoginContext);
+    const { user, setUser, isAuth, userInfo } = useContext(LoginContext);
 
     let history = useHistory();
     const [data, setData] = useState({ search: '' });
