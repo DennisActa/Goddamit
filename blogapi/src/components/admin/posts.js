@@ -69,8 +69,8 @@ const Posts = (props) => {
                                             <TableCell component="th" scope="row">
                                                 {post.id}
                                             </TableCell>
-                                            <TableCell align="left">{post.category.name}</TableCell>
-                                            <TableCell align="left">{post.author.username}</TableCell>
+                                            <TableCell align="left">{post.categoryName}</TableCell>
+                                            <TableCell align="left">{post.authorUserName}</TableCell>
                                             <TableCell align="left">
                                                 <Link
                                                     component={NavLink}
